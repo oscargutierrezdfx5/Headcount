@@ -4,7 +4,7 @@ import LandingPage from "./containers/LandingPage.js";
 import SetNewPasswordPage from "./components/LoginComponents/SetNewPassword.jsx";
 import Dashboard from "./containers/Dashboard.js";
 import CompleteSignup from "./components/LoginComponents/CompleteSignupPage.js";
-import OffboardingPage from "./components/OffboardingComponents/OffboardingPage.jsx";
+import OffboardingPage from "./components/OffBoardingComponents/OffBoardingPage";
 import EmployeeOnboarding from "./containers/EmployeeOnboarding.js";
 import ResponsePage from "./components/SurveysPage/ResponsePage.jsx";
 import ErrorPage from "./components/Error/ErrorPage.jsx";

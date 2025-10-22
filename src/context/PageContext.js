@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 
 const PageContext = React.createContext();
 const api = require("../assets/FetchServices");

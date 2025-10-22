@@ -8,6 +8,14 @@ export const StateProvider = ({ children }) => {
   // state contains user, employee and company logo
   const [state, setState] = useState({logo});
 
+  // key is the name of the object to be updated eg. user
+  const updateState = (key, value) => {
+    const data = produce(state, (newState) => {
+      newState[key] = value;
+    });
+    setState(data);
+  };
+
   useEffect(() => {
     async function fetchData() {
       // Get logo
@@ -25,15 +33,7 @@ export const StateProvider = ({ children }) => {
       }
     }
     fetchData();
-  }, []);
-
-  // key is the name of the object to be updated eg. user
-  const updateState = (key, value) => {
-    const data = produce(state, (newState) => {
-      newState[key] = value;
-    });
-    setState(data);
-  };
+  }, [updateState]);
 
   //Change multiple values at the same time. This function takes an array of objects - {key, value}
   const updateStates = (values) => {
