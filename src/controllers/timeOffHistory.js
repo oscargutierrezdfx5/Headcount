@@ -20,7 +20,7 @@ exports.showOne = async (req, res) => {
   const id = req.params.id;
   //Query using empId
   const data = await db.timeOffHistory.findByPk(id, {
-    include: "employee"
+    include: [{ model: db.employee, as: "manager" }]
   });
   if (data === null) {
     res.status(400).send("Not found!");
@@ -34,7 +34,7 @@ exports.showAllByEmployee = async (req, res) => {
   //Query using empId
   const data = await db.timeOffHistory.findAll({ 
     where: { empId: empId },
-    include: ["employee", "timeOff"]
+    include: [{ model: db.employee, as: "manager" }, { model: db.timeOff }]
   }); 
   if (data === null) {
     res.status(400).send("Not found!");

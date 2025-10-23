@@ -9,7 +9,7 @@ const { getAuthUser } = require("../../config/authJwt");
 exports.showAll = async (req, res) => {
   const data = await db.appUser.findAll({
     attributes: ["id", "email", "empId", "firstName", "lastName", "access"],
-    include: [db.permission],
+    include: [{ model: db.permission, as: "permission" }],
   });
   if (!data) {
     return res.send([]);
@@ -21,7 +21,7 @@ exports.showOne = async (req, res) => {
   const id = req.params.id;
   const data = await db.appUser.findByPk(id, {
     attributes: ["email", "empId", "firstName", "lastName", "access"],
-    include: [db.permission],
+    include: [{ model: db.permission, as: "permission" }],
   });
   if (data === null) {
     res.send([]);
@@ -36,7 +36,7 @@ exports.findByEmail = async (req, res) => {
   }
   const data = await db.appUser.findOne({
     attributes: ["email", "empId", "firstName", "lastName", "access"],
-    include: [db.permission],
+    include: [{model: db.permission , as : "permission"}],
     where: { email: req.body.email.toLowerCase() },
   });
   if (data === null) {
@@ -62,7 +62,7 @@ exports.findByToken = async (req, res) => {
   //Find user based on the parameter token
   const user = await db.appUser.findOne({
     attributes: ["email", "empId", "firstName", "lastName", "access"],
-    include: [db.permission],
+    include: [{ model: db.permission, as: "permission" }],
     where: {
       passwordResetToken: token,
       passwordResetTokenExpiresAt: { [db.Sequelize.Op.gt]: Date.now() },
