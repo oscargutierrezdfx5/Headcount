@@ -170,5 +170,43 @@ db.employee.belongsTo(db.employee, {
   as: "manager",
   foreignKey: "managerId",
 });
-// (El resto de relaciones permanece igual)
+// TimeOffHistory associations
+db.employee.hasMany(db.timeOffHistory, {
+  foreignKey: "empId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+db.timeOffHistory.belongsTo(db.employee, {
+  foreignKey: "empId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+db.employee.hasMany(db.timeOffHistory, {
+  as: "managedTimeOffs",
+  foreignKey: "managerId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+db.timeOffHistory.belongsTo(db.employee, {
+  as: "approver",
+  foreignKey: "managerId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+db.timeOff.hasMany(db.timeOffHistory, {
+  foreignKey: "timeOffId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+db.timeOffHistory.belongsTo(db.timeOff, {
+  foreignKey: "timeOffId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
 module.exports = db;

@@ -98,9 +98,9 @@ const getTopFive = (results) => {
 //Utility function to change photo to base64
 const convertPhotoToBase64 = (employee) => {
   employee.photo = employee.photo && employee.photo.toString("base64");
-  if (employee.Manager) {
-    employee.Manager.photo =
-      employee.Manager.photo && employee.Manager.photo.toString("base64");
+  if (employee.manager) {
+    employee.manager.photo =
+      employee.manager.photo && employee.manager.photo.toString("base64");
   }
 };
 
@@ -112,7 +112,7 @@ const employeeQueryObject = {
     "socialProfiles",
     {
       model: db.employee,
-      as: "Manager",
+      as: "manager",
     },
   ],
 };
@@ -271,7 +271,7 @@ exports.showAllByManager = async (req, res) => {
     include: [
       {
         model: db.employee,
-        as: "Manager",
+        as: "manager",
       },
     ],
     where: { managerId: req.params.id },
@@ -282,10 +282,10 @@ exports.showAllByManager = async (req, res) => {
   for (let index = 0; index < employee.length; index++) {
     employee[index].photo =
       employee[index].photo && employee[index].photo.toString("base64");
-    if (employee[index].Manager) {
-      employee[index].Manager.photo =
-        employee[index].Manager.photo &&
-        employee[index].Manager.photo.toString("base64");
+    if (employee[index].manager) {
+      employee[index].manager.photo =
+        employee[index].manager.photo &&
+        employee[index].manager.photo.toString("base64");
     }
   }
   res.send(employee);

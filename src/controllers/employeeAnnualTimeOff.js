@@ -18,10 +18,8 @@ exports.showAll = async (req, res) => {
 exports.showOne = async (req, res) => {
   const empId = req.params.empid;
 try {
-  const query = `SELECT e.id, e."yearNumber" AS "year", e."hoursAllowed", e."cumulativeHoursTaken" AS "hoursUsed",(e."hoursAllowed" - e."cumulativeHoursTaken") AS "hoursLeft", t."id" AS "timeOffId", t.category FROM "employeeAnnualTimeOff" e JOIN "timeOff" t ON e."timeOffId" = t.id  WHERE e."employeeEmpId" = :empId ORDER BY 2;`;
-const [results, metadata] = await db.sequelize.query(query, {
-  replacements: { empId: empId },
-});
+  const query = `SELECT e.id, e."yearNumber" AS "year", e."hoursAllowed", e."cumulativeHoursTaken" AS "hoursUsed",(e."hoursAllowed" - e."cumulativeHoursTaken") AS "hoursLeft" FROM "employeeAnnualTimeOff" e ORDER BY 2;`;
+const [results, metadata] = await db.sequelize.query(query);
      res.status(200).send(results);
 
 } catch (err) {
@@ -105,23 +103,13 @@ exports.deleteRecord = async (req, res) => {
             e."yearNumber" AS "year", 
             e."hoursAllowed", 
             e."cumulativeHoursTaken" AS "hoursUsed",
-            (e."hoursAllowed" - e."cumulativeHoursTaken") AS "hoursLeft", 
-            t."id" AS "timeOffId", 
-            t.category 
+            (e."hoursAllowed" - e."cumulativeHoursTaken") AS "hoursLeft"
           FROM 
             "employeeAnnualTimeOff" e 
-          JOIN 
-            "timeOff" t 
-          ON 
-            e."timeOffId" = t.id  
-          WHERE 
-            e."employeeEmpId" = :empId 
           ORDER BY 2;
         `;
         
-        const [results, metadata] = await db.sequelize.query(query, {
-          replacements: { empId: empId },
-        });
+        const [results, metadata] = await db.sequelize.query(query);
     
         const policies = [];
         const now = new Date();
@@ -130,7 +118,7 @@ exports.deleteRecord = async (req, res) => {
         for (const result of results) {
           if (result.year === year) {
             const policy = {
-              type: result.category,
+              type: 'General',
               availableDays: Math.floor(result.hoursLeft / 8),
               hoursUsed: result.hoursUsed,
             };

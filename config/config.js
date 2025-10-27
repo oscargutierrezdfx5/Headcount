@@ -2,8 +2,8 @@ require('dotenv').config({ path: `${process.cwd()}/.env` });
 
 module.exports = {
     development: {
-        username: process.env.USER,
-        password: process.env.PASSWORD,
+        username: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
         database: process.env.DB,
         host: process.env.HOST,
         port: process.env.PORT,
