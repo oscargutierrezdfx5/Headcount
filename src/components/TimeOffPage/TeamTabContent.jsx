@@ -76,19 +76,21 @@ export default function TeamTabContent({style}) {
                     .then((data) => {
                         if (data) {
                             data.forEach((p) => {
-                                periods.push({
-                                    id: p.id,
-                                    user: {
-                                        name: `${p.employee.firstName} ${p.employee.lastName}`,
-                                        avatar: p.employee.photo
-                                    },
-                                    from: formatDate(dayjs(p.startDate).toDate()),
-                                    to: formatDate(dayjs(p.endDate).toDate()),
-                                    type: p.timeOff.category,
-                                    hours: p.hours,
-                                    note: p.note,
-                                    status: p.status
-                                });
+                                if (p.employee) {
+                                    periods.push({
+                                        id: p.id,
+                                        user: {
+                                            name: `${p.employee.firstName} ${p.employee.lastName}`,
+                                            avatar: p.employee.photo
+                                        },
+                                        from: formatDate(dayjs(p.startDate).toDate()),
+                                        to: formatDate(dayjs(p.endDate).toDate()),
+                                        type: p.timeOff.category,
+                                        hours: p.hours,
+                                        note: p.note,
+                                        status: p.status
+                                    });
+                                }
                             })
                             setTimeOffPeriods([...timeOffPeriods, ...periods]);
                         }
@@ -113,19 +115,21 @@ export default function TeamTabContent({style}) {
                     .then((data) => {
                         if (data) {
                             data.forEach((p) => {
-                                periods.push({
-                                    id: p.id,
-                                    user: {
-                                        name: `${p.employee.firstName} ${p.employee.lastName}`,
-                                        avatar: p.employee.photo
-                                    },
-                                    from: formatDate(dayjs(p.startDate).toDate()),
-                                    to: formatDate(dayjs(p.endDate).toDate()),
-                                    type: p.timeOff.category,
-                                    hours: p.hours,
-                                    note: p.note,
-                                    status: p.status
-                                });
+                                if (p.employee) {
+                                    periods.push({
+                                        id: p.id,
+                                        user: {
+                                            name: `${p.employee.firstName} ${p.employee.lastName}`,
+                                            avatar: p.employee.photo
+                                        },
+                                        from: formatDate(dayjs(p.startDate).toDate()),
+                                        to: formatDate(dayjs(p.endDate).toDate()),
+                                        type: p.timeOff.category,
+                                        hours: p.hours,
+                                        note: p.note,
+                                        status: p.status
+                                    });
+                                }
                             })
                             setTimeOffPeriods([...timeOffPeriods, ...periods]);
                         }
